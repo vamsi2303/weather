@@ -16,27 +16,50 @@ const getweatherdata = (infodata , searchParams) =>{
 
 };
 
-const formatForecastWeather = (data) => {
-    let {timezone, daily, hourly} = data;
-    daily = daily.slice(1,6).map( d =>
-        {
-            return {
-                title: formatTolocalTime(d.dt , timezone , 'cccc'),
-                temp : d.temp.day,
-                icon : d.weather[0].icon
-            }
-        });
-        hourly = hourly.slice(1,6).map( d =>
-            {
-                return {
-                    title: formatTolocalTime(d.dt , timezone , 'hh:mm a '),
-                    temp : d.temp,
-                    icon : d.weather[0].icon
-                }
-            });
+// const formatForecastWeather = (data) => {
+//     let {timezone, daily, hourly} = data;
+//     daily = daily.slice(1,6).map( d =>
+//         {
+//             return {
+//                 title: formatTolocalTime(d.dt , timezone , 'cccc'),
+//                 temp : d.temp.day,
+//                 icon : d.weather[0].icon
+//             }
+//         });
+//         hourly = hourly.slice(1,6).map( d =>
+//             {
+//                 return {
+//                     title: formatTolocalTime(d.dt , timezone , 'hh:mm a '),
+//                     temp : d.temp,
+//                     icon : d.weather[0].icon
+//                 }
+//             });
 
-    return {timezone, daily, hourly};
- };
+//     return {timezone, daily, hourly};
+//  };
+const formatForecastWeather = (data) => {
+    let { timezone, daily, hourly } = data;
+
+    daily = daily.slice(1, 6).map(d => {
+        const weatherIcon = d.weather && d.weather.length > 0 ? d.weather[0].icon : 'default-icon';
+        return {
+            title: formatTolocalTime(d.dt, timezone, 'cccc'),
+            temp: d.temp && d.temp.day ? d.temp.day : 'N/A',
+            icon: weatherIcon
+        };
+    });
+
+    hourly = hourly.slice(1, 6).map(d => {
+        const weatherIcon = d.weather && d.weather.length > 0 ? d.weather[0].icon : 'default-icon';
+        return {
+            title: formatTolocalTime(d.dt, timezone, 'hh:mm a'),
+            temp: d.temp ? d.temp : 'N/A',
+            icon: weatherIcon
+        };
+    });
+
+    return { timezone, daily, hourly };
+};
 
 const formatCurrentWeather = (data) => {
     const {
