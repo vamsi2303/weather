@@ -1,7 +1,6 @@
 import React from 'react'
 
 function Forecast({title, items}) {
-  console.log(items);
   return (
     
     <div>
@@ -12,8 +11,8 @@ function Forecast({title, items}) {
         </div>
         <hr className="my-2"/>
         <div className="flex flex-row justify-between items-center text-white">
-        {items.map((item)=>(
-            <div className="flex flex-col justify-between items-center text-white">
+        {items?.map((item, index)=>(
+            <div key={index} className="flex flex-col justify-between items-center text-white">
             <p className="font-light text-sm">{item.title}</p>
             <img
               src="http://openweathermap.org/img/wn/01d@2x.png"
@@ -25,7 +24,8 @@ function Forecast({title, items}) {
           )
            
           )}
-        
+          
+          
             
             
         </div>
